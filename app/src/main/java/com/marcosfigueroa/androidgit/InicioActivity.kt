@@ -15,5 +15,11 @@ class InicioActivity : AppCompatActivity() {
         // TextView
         tvUsuario.text = "Bienvenido $usuario"
 
+        //Boton Salir
+        btnSalir.setOnClickListener {
+            finish()
+        }
+
+
     }
 }
