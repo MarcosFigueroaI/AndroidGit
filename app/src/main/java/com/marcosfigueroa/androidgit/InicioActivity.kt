@@ -1,5 +1,6 @@
 package com.marcosfigueroa.androidgit
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_inicio.*
@@ -17,6 +18,7 @@ class InicioActivity : AppCompatActivity() {
 
         //Boton Salir
         btnSalir.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
 
