@@ -12,6 +12,7 @@ class InicioActivity : AppCompatActivity() {
         //Recuperar intent
         val usuario = intent.getStringExtra("usuario")
 
+        // TextView
         tvUsuario.text = "Bienvenido $usuario"
 
     }
