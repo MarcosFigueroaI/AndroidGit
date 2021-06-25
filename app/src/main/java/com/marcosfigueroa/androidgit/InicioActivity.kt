@@ -16,9 +16,6 @@ class InicioActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inicio)
 
-        // No dark mode
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
         // Hide action bar
         supportActionBar?.hide()
 
