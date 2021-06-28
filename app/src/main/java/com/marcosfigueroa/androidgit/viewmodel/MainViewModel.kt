@@ -21,13 +21,4 @@ class MainViewModel(private val repository: Repository): ViewModel() {
         }
     }
 
-    fun logi() {
-        viewModelScope.launch {
-            val response = repository.logi()
-            myResponse.value = response
-        }
-    }
-
-
-
 }

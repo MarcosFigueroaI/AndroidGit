@@ -8,10 +8,6 @@ import retrofit2.Response
 
 class Repository {
 
-    suspend fun logi(): Response<Usuarios> {
-        return RetrofitInstance.api.logi()
-    }
-
     suspend fun login(user: String, pwd: String): Response<Usuarios> {
         return RetrofitInstance.api.login(user, pwd)
     }
