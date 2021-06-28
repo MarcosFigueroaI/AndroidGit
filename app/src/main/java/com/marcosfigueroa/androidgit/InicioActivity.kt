@@ -22,9 +22,10 @@ class InicioActivity : AppCompatActivity() {
         // Obtener nombrede usuario
         sp = getSharedPreferences("usuario", Context.MODE_PRIVATE)
         val usuario = sp.getString("nombre", "")
+        val token = sp.getString("token", "")
 
         // TextView
-        tvUsuario.text = "Bienvenido $usuario"
+        tvUsuario.text = "Bienvenido $usuario, tu token es: $token"
 
         //Boton Salir
         btnSalir.setOnClickListener {
@@ -38,7 +39,5 @@ class InicioActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
-
-
     }
 }

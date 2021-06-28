@@ -1,6 +1,8 @@
 package com.marcosfigueroa.androidgit.model
 
 data class Usuarios(
-    val Usuarios: ArrayList<Usuario>,
-    //val status: String
+    val data: ArrayList<Usuario>,
+    val success: Boolean,
+    val msg: String,
+    val token: String
 )

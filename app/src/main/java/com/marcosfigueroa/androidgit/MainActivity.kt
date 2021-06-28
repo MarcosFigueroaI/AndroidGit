@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun validar(usuario: String, contraseña: String) {
         if (usuario.isEmpty() || contraseña.isEmpty()) {
-            Toast.makeText(applicationContext, "Por favor llena todos los campos.", Toast.LENGTH_LONG).show()
+            mostrarAlerta("Advertencia", "Por favor llena todos los campos.")
         } else {
             val repository = Repository()
             val viewModelFactory = MainViewModelFactory(repository)
@@ -47,30 +48,58 @@ class MainActivity : AppCompatActivity() {
             viewModel.login(usuario, contraseña)
             viewModel.myResponse.observe(this, Observer { response ->
                 if (response.isSuccessful) {
-                    // Iniciar sesion
-                    sp = getSharedPreferences("sesion", Context.MODE_PRIVATE)
-                    var editor = sp.edit()
-                    editor.putString("sesion", "1")
-                    editor.apply()
-
-                    // Obtener nombre del usuario
-                    val data = response.body()?.Usuarios
-                    val user: ArrayList<Usuario>? = data
-                    for (i in user!!) {
-                        sp = getSharedPreferences("usuario", Context.MODE_PRIVATE)
+                    val success = response.body()?.success
+                    if (success!!) {
+                        // Iniciar sesion
+                        sp = getSharedPreferences("sesion", Context.MODE_PRIVATE)
                         var editor = sp.edit()
-                        editor.putString("nombre", i.nombre)
+                        editor.putString("sesion", "1")
                         editor.apply()
-                    }
 
-                    // Ir a otra actividad
-                    startActivity(Intent(this, InicioActivity::class.java))
-                    finish()
+                        // Obtener nombre del usuario
+                        val data = response.body()?.data
+                        val token = response.body()?.token
+                        val user: ArrayList<Usuario>? = data
+                        for (i in user!!) {
+                            sp = getSharedPreferences("usuario", Context.MODE_PRIVATE)
+                            var editor = sp.edit()
+                            editor.putString("nombre", i.nombre)
+                            editor.putString("token", token)
+                            editor.apply()
+                        }
+
+                        // Ir a otra actividad
+                        startActivity(Intent(this, InicioActivity::class.java))
+                        finish()
+                    } else {
+                        // Success False
+                        val msg = response.body()?.msg
+                        mostrarAlerta("Advertencia", msg!!)
+                    }
                 } else {
-                    // Alerta
+                    // Alerta Internet
+                    mostrarAlerta("Error", "Ocurrio un error de conexion.")
                 }
             })
         }
+    }
+
+    fun mostrarAlerta(titulo: String, mensaje: String) {
+        val dialog = AlertDialog.Builder(this)
+            .setTitle(titulo)
+            .setMessage(mensaje)
+            /*.setNegativeButton("Cancelar") { view, _ ->
+                Toast.makeText(this, "Cancel button pressed", Toast.LENGTH_SHORT).show()
+                view.dismiss()
+            }*/
+            .setPositiveButton("Aceptar") { view, _ ->
+                //Toast.makeText(this, "Ok button pressed", Toast.LENGTH_SHORT).show()
+                view.dismiss()
+            }
+            .setCancelable(false)
+            .create()
+
+        dialog.show()
     }
 
 }
