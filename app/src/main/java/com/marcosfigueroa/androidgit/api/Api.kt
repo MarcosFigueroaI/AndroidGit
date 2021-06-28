@@ -1,5 +1,7 @@
 package com.marcosfigueroa.androidgit.api
 
+import com.marcosfigueroa.androidgit.model.Cliente
+import com.marcosfigueroa.androidgit.model.Clientes
 import com.marcosfigueroa.androidgit.model.User
 import com.marcosfigueroa.androidgit.model.Usuarios
 import okhttp3.MultipartBody
@@ -17,5 +19,8 @@ interface Api {
         @Field("user") user: String,
         @Field("pwd") pwd: String
     ): Response<Usuarios>
+
+    @GET("clientes.php")
+    suspend fun getClientes(): Response<Clientes>
 
 }

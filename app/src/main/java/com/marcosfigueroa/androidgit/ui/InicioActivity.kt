@@ -1,11 +1,12 @@
-package com.marcosfigueroa.androidgit
+package com.marcosfigueroa.androidgit.ui
 
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatDelegate
+import com.marcosfigueroa.androidgit.ui.MainActivity
+import com.marcosfigueroa.androidgit.R
 import kotlinx.android.synthetic.main.activity_inicio.*
 
 class InicioActivity : AppCompatActivity() {
@@ -25,7 +26,13 @@ class InicioActivity : AppCompatActivity() {
         val token = sp.getString("token", "")
 
         // TextView
-        tvUsuario.text = "Bienvenido $usuario, tu token es: $token"
+        tvUsuario.text = "Bienvenido $usuario"
+
+        // Menu
+        menuNuevoPedido.setOnClickListener {
+            startActivity(Intent(this, ClientesActivity::class.java))
+            finish()
+        }
 
         //Boton Salir
         btnSalir.setOnClickListener {

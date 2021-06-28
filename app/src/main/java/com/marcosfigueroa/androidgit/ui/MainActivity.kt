@@ -1,18 +1,15 @@
-package com.marcosfigueroa.androidgit
+package com.marcosfigueroa.androidgit.ui
 
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.gson.Gson
-import com.marcosfigueroa.androidgit.model.User
+import com.marcosfigueroa.androidgit.R
 import com.marcosfigueroa.androidgit.model.Usuario
-import com.marcosfigueroa.androidgit.model.Usuarios
 import com.marcosfigueroa.androidgit.repository.Repository
 import com.marcosfigueroa.androidgit.viewmodel.MainViewModel
 import com.marcosfigueroa.androidgit.viewmodel.MainViewModelFactory
@@ -40,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun validar(usuario: String, contraseña: String) {
         if (usuario.isEmpty() || contraseña.isEmpty()) {
-            mostrarAlerta("Advertencia", "Por favor llena todos los campos.")
+            mostrarAlerta(this, "Advertencia", "Por favor llena todos los campos.")
         } else {
             val repository = Repository()
             val viewModelFactory = MainViewModelFactory(repository)
@@ -74,18 +71,18 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         // Success False
                         val msg = response.body()?.msg
-                        mostrarAlerta("Advertencia", msg!!)
+                        mostrarAlerta(this, "Advertencia", msg!!)
                     }
                 } else {
                     // Alerta Internet
-                    mostrarAlerta("Error", "Ocurrio un error de conexion.")
+                    mostrarAlerta(this, "Error", "Ocurrio un error de conexion.")
                 }
             })
         }
     }
 
-    fun mostrarAlerta(titulo: String, mensaje: String) {
-        val dialog = AlertDialog.Builder(this)
+    fun mostrarAlerta(context: Context, titulo: String, mensaje: String) {
+        val dialog = AlertDialog.Builder(context)
             .setTitle(titulo)
             .setMessage(mensaje)
             /*.setNegativeButton("Cancelar") { view, _ ->

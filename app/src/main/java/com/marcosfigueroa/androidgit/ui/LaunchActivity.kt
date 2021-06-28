@@ -1,4 +1,4 @@
-package com.marcosfigueroa.androidgit
+package com.marcosfigueroa.androidgit.ui
 
 import android.content.Context
 import android.content.Intent
@@ -6,6 +6,8 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
+import com.marcosfigueroa.androidgit.ui.MainActivity
+import com.marcosfigueroa.androidgit.R
 
 class LaunchActivity : AppCompatActivity() {
 
