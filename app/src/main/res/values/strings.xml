@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Android Git</string>
+
+    <!-- Titulos -->
+    <string name="seleccionaCliente">Selecciona un cliente</string>
+    <string name="seleccionaProducto">Selecciona un producto</string>
+
+    <!-- Botones -->
+    <string name="regresar">Regresar</string>
+
 </resources>

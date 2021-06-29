@@ -14,4 +14,8 @@ class Repository {
         return RetrofitInstance.api.getClientes()
     }
 
+    suspend fun getProductos(): Response<Productos> {
+        return RetrofitInstance.api.getProductos()
+    }
+
 }

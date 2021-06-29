@@ -9,15 +9,15 @@ import com.marcosfigueroa.androidgit.R
 import com.marcosfigueroa.androidgit.model.Cliente
 import kotlinx.android.synthetic.main.lista_clientes.view.*
 
-class AdapterClientes(var clickListener: OnItemClickListener): RecyclerView.Adapter<AdapterClientes.MyViewHolder>() {
+class AdapterClientes(var clickListener: OnClienteClickListener): RecyclerView.Adapter<AdapterClientes.MyViewHolder>() {
 
     var clientesList = emptyList<Cliente>()
 
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        var nombre = itemView.tvCliente
+        var cliente = itemView.tvCliente
 
-        fun initialize(item: Cliente, action:OnItemClickListener) {
-            nombre.text = item.nombre_cliente
+        fun initialize(item: Cliente, action:OnClienteClickListener) {
+            cliente.text = item.nombre
             itemView.setOnClickListener {
                 action.itemClick(item, adapterPosition)
             }
@@ -29,7 +29,6 @@ class AdapterClientes(var clickListener: OnItemClickListener): RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        //val item = clientesList[position]
         holder.initialize(clientesList.get(position), clickListener)
     }
 
@@ -43,6 +42,6 @@ class AdapterClientes(var clickListener: OnItemClickListener): RecyclerView.Adap
     }
 }
 
-interface OnItemClickListener {
+interface OnClienteClickListener {
     fun itemClick(item: Cliente, position: Int) {}
 }

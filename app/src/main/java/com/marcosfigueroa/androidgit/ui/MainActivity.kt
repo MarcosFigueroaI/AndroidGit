@@ -5,12 +5,14 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.marcosfigueroa.androidgit.R
 import com.marcosfigueroa.androidgit.model.Usuario
 import com.marcosfigueroa.androidgit.repository.Repository
+import com.marcosfigueroa.androidgit.utils.Alertas
 import com.marcosfigueroa.androidgit.viewmodel.MainViewModel
 import com.marcosfigueroa.androidgit.viewmodel.MainViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,26 +21,28 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var sp: SharedPreferences
     private lateinit var viewModel: MainViewModel
+    val alerta = Alertas()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         // Boton acceder
         btnAcceder.setOnClickListener {
+            // Variables
             val usuario = etUsuario.text.toString()
             val contraseña = etContraseña.text.toString()
-
             // Funcion validar
             validar(usuario, contraseña)
         }
-
     }
 
     private fun validar(usuario: String, contraseña: String) {
         if (usuario.isEmpty() || contraseña.isEmpty()) {
-            mostrarAlerta(this, "Advertencia", "Por favor llena todos los campos.")
+            alerta.mostrarAlerta(this, "Advertencia", "Por favor llena todos los campos.")
         } else {
+            // mostrarProgress
+            mostrarProgress()
+            // repository, viewModel, observer
             val repository = Repository()
             val viewModelFactory = MainViewModelFactory(repository)
             viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
@@ -52,7 +56,6 @@ class MainActivity : AppCompatActivity() {
                         var editor = sp.edit()
                         editor.putString("sesion", "1")
                         editor.apply()
-
                         // Obtener nombre del usuario
                         val data = response.body()?.data
                         val token = response.body()?.token
@@ -64,39 +67,34 @@ class MainActivity : AppCompatActivity() {
                             editor.putString("token", token)
                             editor.apply()
                         }
-
+                        // ocultarProgress
+                        ocultarProgress()
                         // Ir a otra actividad
                         startActivity(Intent(this, InicioActivity::class.java))
                         finish()
                     } else {
+                        // ocultarProgress
+                        ocultarProgress()
                         // Success False
                         val msg = response.body()?.msg
-                        mostrarAlerta(this, "Advertencia", msg!!)
+                        alerta.mostrarAlerta(this, "Advertencia", msg!!)
                     }
                 } else {
+                    // ocultarProgress
+                    ocultarProgress()
                     // Alerta Internet
-                    mostrarAlerta(this, "Error", "Ocurrio un error de conexion.")
+                    alerta.mostrarAlerta(this, "Error", "Ocurrio un error de conexion.")
                 }
             })
         }
     }
 
-    fun mostrarAlerta(context: Context, titulo: String, mensaje: String) {
-        val dialog = AlertDialog.Builder(context)
-            .setTitle(titulo)
-            .setMessage(mensaje)
-            /*.setNegativeButton("Cancelar") { view, _ ->
-                Toast.makeText(this, "Cancel button pressed", Toast.LENGTH_SHORT).show()
-                view.dismiss()
-            }*/
-            .setPositiveButton("Aceptar") { view, _ ->
-                //Toast.makeText(this, "Ok button pressed", Toast.LENGTH_SHORT).show()
-                view.dismiss()
-            }
-            .setCancelable(false)
-            .create()
+    private fun mostrarProgress() {
+        progressBar.visibility = View.VISIBLE
+    }
 
-        dialog.show()
+    private fun ocultarProgress() {
+        progressBar.visibility = View.GONE
     }
 
 }

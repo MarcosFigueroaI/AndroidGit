@@ -1,9 +1,6 @@
 package com.marcosfigueroa.androidgit.api
 
-import com.marcosfigueroa.androidgit.model.Cliente
-import com.marcosfigueroa.androidgit.model.Clientes
-import com.marcosfigueroa.androidgit.model.User
-import com.marcosfigueroa.androidgit.model.Usuarios
+import com.marcosfigueroa.androidgit.model.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -22,5 +19,8 @@ interface Api {
 
     @GET("clientes.php")
     suspend fun getClientes(): Response<Clientes>
+
+    @GET("productos.php")
+    suspend fun getProductos(): Response<Productos>
 
 }

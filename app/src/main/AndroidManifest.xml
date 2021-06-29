@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidGit"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.ClientesActivity"></activity>
+        <activity android:name=".ui.ProductosActivity"></activity>
+        <activity android:name=".ui.ClientesActivity" />
         <activity android:name=".ui.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

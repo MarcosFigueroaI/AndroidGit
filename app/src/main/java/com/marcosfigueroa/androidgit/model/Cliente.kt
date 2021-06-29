@@ -1,6 +1,10 @@
 package com.marcosfigueroa.androidgit.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Cliente(
-    val id_cliente: Int,
-    val nombre_cliente: String
+    @SerializedName("id_cliente")
+    val id: Int,
+    @SerializedName("nombre_cliente")
+    val nombre: String
 )

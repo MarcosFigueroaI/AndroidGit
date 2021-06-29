@@ -12,6 +12,7 @@ class MainViewModel(private val repository: Repository): ViewModel() {
 
     val myResponse: MutableLiveData<Response<Usuarios>> = MutableLiveData()
     val responseClientes: MutableLiveData<Response<Clientes>> = MutableLiveData()
+    val responseProductos: MutableLiveData<Response<Productos>> = MutableLiveData()
 
     fun login(user: String, pwd: String) {
         viewModelScope.launch {
@@ -24,6 +25,13 @@ class MainViewModel(private val repository: Repository): ViewModel() {
         viewModelScope.launch {
             val response = repository.getClientes()
             responseClientes.value = response
+        }
+    }
+
+    fun getProductos() {
+        viewModelScope.launch {
+            val response = repository.getProductos()
+            responseProductos.value = response
         }
     }
 
